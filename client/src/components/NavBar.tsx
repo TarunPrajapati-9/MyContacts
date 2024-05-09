@@ -9,7 +9,7 @@ export default function NavBar() {
         <img
           src="/logo.svg"
           alt="logo"
-          className="pointer-events-none select-none px-5"
+          className="pointer-events-none select-none px-5 mt-3"
           height={150}
           width={243}
         />
@@ -21,7 +21,7 @@ export default function NavBar() {
             <li key={item.name} className="inline-block ml-6">
               <Link
                 to={item.link}
-                className="font-navItems text-3xl hover:bg-transparent hover:opacity-85"
+                className="font-navItems text-3xl hover:bg-transparent hover:opacity-80"
               >
                 {item.name}
               </Link>
@@ -35,12 +35,12 @@ export default function NavBar() {
           <input
             type="text"
             placeholder="Search"
-            className="input input-bordered pr-10 w-24 md:w-auto rounded-badge"
+            className="input input-bordered pr-10 w-24 md:w-auto rounded-badge bg-transparent"
           />
           <img
             src="./src/assets/icons/search.png"
             alt="Search Icon"
-            className="absolute top-1/2 right-2 transform -translate-y-1/2 w-9 h-9 text-gray-400 hover:h-10 hover:w-10"
+            className="absolute top-1/2 right-2 transform -translate-y-1/2 w-9 h-9 text-gray-400 cursor-pointer hover:opacity-80"
           />
         </div>
         <div role="button" className="btn btn-ghost btn-circle avatar">

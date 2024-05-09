@@ -42,7 +42,7 @@ const Home = () => {
         <p className="font-contentTitle text-2xl">
           Sign up now to get started!
         </p>
-        <button className="btn btn-neutral mx-4 w-36">Sign Up</button>
+        <button className="btn btn-outline btn-info mx-4 w-36">Sign Up</button>
       </div>
       <hr className="border-separate border-black mt-6" />
 
