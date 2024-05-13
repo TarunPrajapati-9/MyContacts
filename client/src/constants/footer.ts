@@ -1,4 +1,10 @@
-export const logo = [
+type Logo = {
+  url: string;
+  alt: string;
+  navigateUrl: string;
+};
+
+export const logo: Logo[] = [
   {
     url: "./src/assets/icons/instagram.svg",
     alt: "Instagram",
