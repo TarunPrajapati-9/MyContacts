@@ -4,7 +4,6 @@ import Home from "./components/Home";
 import Contacts from "./components/Contacts";
 import Footer from "./components/Footer";
 
-// div className="bg-[#DAEAF1] w-full"
 export default function App() {
   return (
     <>
