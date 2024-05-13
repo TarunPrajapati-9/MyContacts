@@ -7,47 +7,55 @@ const Footer = () => {
   const navigateUrl = (url: string) => {
     window.open(url, "_blank");
   };
+
   return (
     <>
-      <div className="flex justify-between select-none">
-        {/* Follow Section */}
-        <div className="w-1/3 flex flex-col items-center justify-center p-16">
-          <p className="font-contentTitle text-3xl mt-4 px-4">Follow Us</p>
-          {/* Logo section */}
-          <div className="flex my-4">
-            {logo.map((logo, index) => (
-              <img
-                key={index}
-                src={logo.url}
-                alt={logo.alt}
-                className="px-1 w-[50px] h-[50px] cursor-pointer hover:opacity-85"
-                onClick={() => {
-                  navigateUrl(logo.navigateUrl);
-                }}
-              />
-            ))}
+      <div className="flex flex-col md:flex-row justify-between select-none">
+        <div className="flex flex-row md:gap-48">
+          {/* Follow Section */}
+          <div className="w-1/2 md:w-1/3 flex flex-col items-center justify-center p-7">
+            <p className="font-contentTitle text-3xl mt-4 px-4 text-nowrap">
+              Follow Us
+            </p>
+            {/* Logo section */}
+            <div className="flex my-4">
+              {logo.map((logo, index) => (
+                <img
+                  key={index}
+                  src={logo.url}
+                  alt={logo.alt}
+                  className="px-1 w-[50px] h-[50px] cursor-pointer hover:opacity-85"
+                  onClick={() => {
+                    navigateUrl(logo.navigateUrl);
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Help Section */}
+          <div className="w-1/2 md:w-1/3 p-16">
+            <p className="font-footer font-bold text-2xl">Help</p>
+            <ul className="list-none font-footer text-xl">
+              {help.map((item) => (
+                <li
+                  key={item}
+                  className="my-1.5 hover:opacity-80 cursor-pointer"
+                >
+                  <Link to="/" key={item}>
+                    {item}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 
-        {/* Help Section */}
-        <div className="w-1/3 p-16">
-          <p className="font-footer font-bold text-2xl">Help</p>
-          <ul className="list-none font-footer text-xl">
-            {help.map((item) => (
-              <li key={item} className="my-1.5 hover:opacity-80 cursor-pointer">
-                <Link to="/" key={item}>
-                  {item}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-
         {/* Email Section */}
-        <div className="w-1/3 p-16 flex flex-col items-center justify-center">
+        <div className="w-full md:w-1/3 p-16 flex flex-col items-center justify-center">
           <a href="mailto:mycontacts@gmail.com">
             <img
-              src="./src/assets/icons/email.svg"
+              src="./assets/icons/email.svg"
               alt="Email Logo"
               className="px-1 w-[50px] h-[50px] cursor-pointer hover:opacity-85"
             />

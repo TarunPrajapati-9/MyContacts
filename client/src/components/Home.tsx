@@ -4,7 +4,7 @@ const Home = () => {
   return (
     <>
       {/* Top Section */}
-      <div className="flex justify-center items-center px-4 py-2 select-none">
+      <div className="flex justify-center items-center px-4 py-2 select-none w-full">
         {/* Content Section */}
         <div className="w-1/2">
           <div className="font-contentTitle text-4xl mt-4 px-4">

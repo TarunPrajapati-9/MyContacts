@@ -69,7 +69,7 @@ export default function Contacts() {
     <>
       <div className="font-navItems text-4xl px-6 py-6">Your Contact List</div>
       {/* Iterate over the contacts array and render a ContactCard for each contact */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 overflow-hidden select-none">
         {contacts.map((contact, index) => (
           <ContactCard key={index} contact={contact} />
         ))}
