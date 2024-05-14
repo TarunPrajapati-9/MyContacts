@@ -6,7 +6,7 @@ import Footer from "./components/Footer";
 
 export default function App() {
   return (
-    <>
+    <div className="overflow-hidden">
       <Router>
         <NavBar />
         <Routes>
@@ -15,6 +15,6 @@ export default function App() {
         </Routes>
         <Footer />
       </Router>
-    </>
+    </div>
   );
 }

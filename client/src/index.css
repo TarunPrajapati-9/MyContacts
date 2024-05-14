@@ -4,25 +4,30 @@
 
 @font-face {
   font-family: "Merriweather";
-  src: url("../public/assets/fonts/Merriweather-Bold.ttf") format("truetype");
+  src: url("/assets/fonts/Merriweather-Bold.ttf") format("truetype");
 }
 
 @font-face {
   font-family: "LeagueSpartan";
-  src: url("../public/assets/fonts/LeagueSpartan-Regular.ttf");
+  src: url("/assets/fonts/LeagueSpartan-Regular.ttf");
 }
 
 @font-face {
   font-family: "MetalMania";
-  src: url("../public/assets/fonts/MetalMania-Regular.ttf");
+  src: url("/assets/fonts/MetalMania-Regular.ttf");
 }
 
 @font-face {
   font-family: "Merienda";
-  src: url("../public/assets/fonts/Merienda-Bold.ttf");
+  src: url("/assets/fonts/Merienda-Bold.ttf");
 }
 
 @font-face {
   font-family: "Niramit";
-  src: url("../public/assets/fonts/Niramit-Regular.ttf");
+  src: url("/assets/fonts/Niramit-Regular.ttf");
+}
+
+@font-face {
+  font-family: "SeoulHangangCBLRegular";
+  src: url("/assets/fonts/SeoulHangangCBLRegular.ttf");
 }

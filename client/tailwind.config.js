@@ -10,6 +10,7 @@ export default {
         contentTitle: ["MetalMania"],
         content: ["Merienda"],
         footer: ["Niramit"],
+        modelTitle: ["SeoulHangangCBLRegular"],
       },
     },
   },
