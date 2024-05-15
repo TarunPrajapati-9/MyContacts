@@ -1,8 +1,8 @@
 import { Tooltip } from "react-tooltip";
 import { contactSvg } from "../constants/contactsvg";
 import { useState } from "react";
-import EditModel from "../Models/EditModel";
-import DeleteModel from "../Models/DeleteModel";
+import EditModel from "./Models/EditModel";
+import DeleteModel from "./Models/DeleteModel";
 
 export interface Contact {
   name: string;

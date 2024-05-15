@@ -1,13 +1,20 @@
+import { useNavigate } from "react-router-dom";
 import features from "../constants/features";
 
 const Home = () => {
+  const navigate = useNavigate();
+
+  const toSignUp = () => {
+    navigate("/register");
+  };
+
   return (
     <>
       {/* Top Section */}
       <div className="flex flex-col md:flex-row justify-center items-center px-4 py-2 select-none">
         {/* Content Section */}
         <div className="w-full md:w-1/2">
-          <div className="font-contentTitle text-4xl mt-4 md:mt-0 px-4 text-center md:text-left animate-pulse">
+          <div className="font-contentTitle text-4xl mt-4 md:mt-0 px-4 text-center md:text-left animate-pulse text-nowrap">
             Welcome to MyContacts!
           </div>
           <div className="font-content my-5 md:text-2xl text-xl px-4 md:text-left text-justify">
@@ -41,7 +48,10 @@ const Home = () => {
         <p className="font-contentTitle md:text-2xl text-xl text-center md:text-left">
           Sign up now to get started!
         </p>
-        <button className="btn btn-outline btn-info mx-4 w-36 animate-bounce">
+        <button
+          className="btn btn-outline btn-info mx-4 w-36 animate-bounce"
+          onClick={toSignUp}
+        >
           Sign Up
         </button>
       </div>

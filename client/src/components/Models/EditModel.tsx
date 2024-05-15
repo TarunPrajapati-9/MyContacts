@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Tooltip } from "react-tooltip";
-import { Contact } from "../components/ContactCard";
+import { Contact } from "../ContactCard";
 
 interface EditModelProps {
   isOpen: boolean;
@@ -31,15 +31,15 @@ function EditModel({ isOpen, onClose, contact }: EditModelProps) {
         <h3 className="font-modelTitle text-2xl">Edit Contact</h3>
         <form onSubmit={handleSubmit(onSubmit)} className="mt-2 p-4">
           <label className="input input-bordered flex items-center gap-2">
-            Name
+            Name :
             <input type="text" className="grow" {...register("name")} />
           </label>
           <label className="input input-bordered flex items-center gap-2 mt-4">
-            Email
+            Email :
             <input type="text" className="grow" {...register("email")} />
           </label>
           <label className="input input-bordered flex items-center gap-2 mt-4">
-            Phone No.
+            Phone No.:
             <input type="text" className="grow" {...register("mobile")} />
           </label>
           <div className="flex justify-center gap-3 p-1 mt-4">
