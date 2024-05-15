@@ -2,6 +2,7 @@ const express = require("express");
 const errorHandler = require("./middleware/errorHandler");
 const connectDb = require("./config/dbConnection");
 const apiKeyMiddleware = require("./middleware/validateApiKeyHandler");
+const cors = require("cors");
 const dotenv = require("dotenv").config();
 
 connectDb(); // connect to database
