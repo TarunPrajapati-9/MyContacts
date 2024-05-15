@@ -17,7 +17,8 @@
     "react-hook-form": "^7.51.4",
     "react-hot-toast": "^2.4.1",
     "react-router-dom": "^6.23.0",
-    "react-tooltip": "^5.26.4"
+    "react-tooltip": "^5.26.4",
+    "universal-cookie": "^7.1.4"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

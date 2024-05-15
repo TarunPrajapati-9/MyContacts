@@ -1,21 +1,49 @@
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
+import Cookies from "universal-cookie";
 import toast from "react-hot-toast";
+import { loginUser } from "../../utils/dataPoster";
+import { useNavigate } from "react-router-dom";
 
+const cookies = new Cookies();
 interface User {
   email: string;
   pwd: string;
 }
 
 function Login() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<User>();
 
+  const { mutate, isPending } = useMutation({
+    mutationFn: loginUser,
+    onSuccess: (res) => {
+      if (res) {
+        cookies.set("access_token", res.accesstoken, {
+          path: "/",
+          httpOnly: true,
+          secure: true,
+        });
+        console.log(cookies.get("access_token"));
+        toast.success(cookies.get("access_token"));
+        navigate("/");
+      }
+    },
+    onError: (error) => {
+      toast.error("Invalid Credentials!");
+      console.log(error);
+    },
+  });
+
   const onSubmit: SubmitHandler<User> = (formData) => {
-    console.log(formData);
-    toast.success("Login Successfully");
+    mutate({
+      email: formData.email,
+      password: formData.pwd,
+    });
   };
 
   return (
@@ -36,6 +64,7 @@ function Login() {
             type="email"
             placeholder="Email"
             className="input input-bordered mb-4"
+            disabled={isPending}
             {...register("email", {
               required: "Email is required!",
               pattern: {
@@ -52,6 +81,7 @@ function Login() {
           <input
             type="password"
             placeholder="Password"
+            disabled={isPending}
             className="input input-bordered mb-4"
             {...register("pwd", {
               required: "Password is required!",
@@ -61,7 +91,21 @@ function Login() {
               },
             })}
           />
-          <button className="btn btn-info w-1/2 mx-auto mt-4">Login</button>
+          <button
+            className="btn btn-info w-1/2 mx-auto mt-4"
+            disabled={isPending}
+          >
+            {isPending ? <span className="loading loading-dots" /> : "Login"}
+          </button>
+          <button
+            type="button"
+            className="btn btn-link"
+            onClick={() => {
+              navigate("/register");
+            }}
+          >
+            Don't have an account?
+          </button>
         </form>
       </div>
     </div>
