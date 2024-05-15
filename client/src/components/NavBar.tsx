@@ -2,12 +2,19 @@ import { Link } from "react-router-dom";
 import navItems from "../constants/navItems";
 import { useState, useRef, useEffect } from "react";
 
-const NavBar = () => {
+interface NavBarProps {
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
+}
+
+const NavBar: React.FC<NavBarProps> = ({ searchQuery, setSearchQuery }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const sidebarRef = useRef<HTMLDivElement>(null); // Provide explicit type for sidebarRef
 
-  const toggleMenu = (e: React.MouseEvent | React.TouchEvent) => {
+  const toggleMenu = (
+    e: React.MouseEvent | React.TouchEvent | React.KeyboardEvent
+  ) => {
     e.stopPropagation();
     setIsOpen(!isOpen);
   };
@@ -27,6 +34,19 @@ const NavBar = () => {
       document.body.removeEventListener("click", closeSidebar);
     };
   }, [sidebarRef]);
+
+  const handleSearchInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const { value } = event.target;
+    setSearchQuery(value);
+  };
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      toggleMenu(event);
+    }
+  };
 
   return (
     <>
@@ -65,13 +85,15 @@ const NavBar = () => {
           <div className="form-control relative mr-4">
             <input
               type="text"
-              placeholder="Search"
+              placeholder="Search Contacts"
               className="input input-bordered pr-10 w-24 md:w-auto rounded-badge bg-transparent"
+              value={searchQuery}
+              onChange={handleSearchInputChange}
             />
             <img
               src="./assets/icons/search.png"
               alt="Search Icon"
-              className="absolute top-1/2 right-2 transform -translate-y-1/2 w-9 h-9 text-gray-400 cursor-pointer hover:opacity-80"
+              className="absolute top-1/2 right-2 transform -translate-y-1/2 w-9 h-9 text-gray-400"
             />
           </div>
           <div role="button" className="btn btn-ghost btn-circle avatar">
@@ -114,6 +136,22 @@ const NavBar = () => {
                   </Link>
                 </li>
               ))}
+              <div className="form-control relative mr-4 p-5">
+                <input
+                  type="text"
+                  placeholder="Search Contacts"
+                  className="input input-bordered w-full rounded-badge bg-transparent"
+                  value={searchQuery}
+                  onChange={handleSearchInputChange}
+                  onKeyDown={handleKeyPress}
+                />
+                <img
+                  src="./assets/icons/search.png"
+                  alt="Search Icon"
+                  className="absolute top-1/2 right-6 transform -translate-y-1/2 w-9 h-9 text-gray-400 cursor-pointer hover:opacity-80"
+                  onClick={toggleMenu}
+                />
+              </div>
             </ul>
           </div>
         </div>

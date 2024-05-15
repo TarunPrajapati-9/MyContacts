@@ -42,6 +42,14 @@ const ContactCard: React.FC<ContactCardProps> = ({ contact }) => {
       .catch((err) => console.error("Could not copy phone number: ", err));
   };
 
+  const shareContact = (contactDetails: string) => {
+    const whatsappLink = `https://wa.me/?text=${encodeURIComponent(
+      contactDetails
+    )}`;
+
+    window.open(whatsappLink, "_blank");
+  };
+
   return (
     <div className="w-[425px] h-[125px] p-6 flex justify-center items-center">
       <div className="w-[30%] p-5 mb-6">
@@ -77,7 +85,15 @@ const ContactCard: React.FC<ContactCardProps> = ({ contact }) => {
                 data-tooltip-content={
                   item.altText.charAt(0).toUpperCase() + item.altText.slice(1)
                 }
-                onClick={() => openModal(index)}
+                onClick={() => {
+                  if (item.altText === "share") {
+                    shareContact(
+                      `Name: ${contact.name}, Mobile: ${contact.mobile}, Email: ${contact.email}`
+                    );
+                  } else {
+                    openModal(index);
+                  }
+                }}
               />
               <Tooltip className="tooltip" id={item.altText} />
             </div>
