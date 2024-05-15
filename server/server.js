@@ -13,6 +13,7 @@ app.get("/", (req, res) => {
 });
 
 app.use(apiKeyMiddleware);
+app.use(cors());
 app.use(express.json());
 app.use("/api/contacts", require("./routes/contactRoutes"));
 app.use("/api/users", require("./routes/userRoutes"));

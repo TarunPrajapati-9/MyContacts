@@ -4,6 +4,7 @@ import {
   Routes,
   useLocation,
 } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
 import NavBar from "./components/NavBar";
 import Home from "./components/Home";
@@ -14,12 +15,15 @@ import Register from "./components/Auth/Register";
 import { useState } from "react";
 
 export default function App() {
+  const [queryClient] = useState(() => new QueryClient());
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   return (
     <Router>
-      <Toaster position="top-center" reverseOrder={true} />
-      <AppContent searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      <QueryClientProvider client={queryClient}>
+        <Toaster position="top-center" reverseOrder={true} />
+        <AppContent searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      </QueryClientProvider>
     </Router>
   );
 }

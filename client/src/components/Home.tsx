@@ -14,7 +14,7 @@ const Home = () => {
       <div className="flex flex-col md:flex-row justify-center items-center px-4 py-2 select-none">
         {/* Content Section */}
         <div className="w-full md:w-1/2">
-          <div className="font-contentTitle text-4xl mt-4 md:mt-0 px-4 text-center md:text-left animate-pulse text-nowrap">
+          <div className="font-contentTitle text-4xl mt-4 md:mt-0 px-4 text-center md:text-left animate-pulse">
             Welcome to MyContacts!
           </div>
           <div className="font-content my-5 md:text-2xl text-xl px-4 md:text-left text-justify">
