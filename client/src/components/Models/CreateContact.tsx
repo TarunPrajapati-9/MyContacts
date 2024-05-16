@@ -1,5 +1,4 @@
 import { useForm } from "react-hook-form";
-import { Contact } from "../ContactCard";
 import { useMutation } from "@tanstack/react-query";
 import { createContact } from "../../utils/dataPoster";
 import toast from "react-hot-toast";
@@ -7,6 +6,12 @@ import toast from "react-hot-toast";
 interface CreateContactProps {
   isOpen: boolean;
   onClose: () => void;
+}
+
+export interface CreateContact {
+  name: string;
+  phone: string;
+  email: string;
 }
 
 function CreateContact({ isOpen, onClose }: CreateContactProps) {
@@ -25,9 +30,9 @@ function CreateContact({ isOpen, onClose }: CreateContactProps) {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Contact>();
+  } = useForm<CreateContact>();
 
-  const onSubmit = (data: Contact) => {
+  const onSubmit = (data: CreateContact) => {
     mutate({
       name: data.name,
       email: data.email,

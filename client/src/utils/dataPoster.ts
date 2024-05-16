@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Contact } from "../components/ContactCard";
+import { CreateContact } from "../components/Models/CreateContact";
 
 interface RegisterUser {
   email: string;
@@ -39,7 +39,7 @@ export async function loginUser(params: LoginUser) {
   return data;
 }
 
-export async function createContact(params: Contact) {
+export async function createContact(params: CreateContact) {
   const token = localStorage.getItem("access_token");
   if (!token) {
     throw new Error("No token found");
