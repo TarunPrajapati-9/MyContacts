@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Contact } from "../components/ContactCard";
 
 interface RegisterUser {
   email: string;
@@ -31,6 +32,26 @@ export async function loginUser(params: LoginUser) {
     {
       headers: {
         "x-api-key": import.meta.env.VITE_HEADER_SECRET,
+      },
+    }
+  );
+  // console.log(data);
+  return data;
+}
+
+export async function createContact(params: Contact) {
+  const token = localStorage.getItem("access_token");
+  if (!token) {
+    throw new Error("No token found");
+  }
+
+  const { data } = await axios.post(
+    `${import.meta.env.VITE_BACKEND_URL}/api/contacts`,
+    params,
+    {
+      headers: {
+        "x-api-key": import.meta.env.VITE_HEADER_SECRET,
+        Authorization: `Bearer ${token}`,
       },
     }
   );

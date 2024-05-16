@@ -1,5 +1,8 @@
 import { useForm } from "react-hook-form";
 import { Contact } from "../ContactCard";
+import { useMutation } from "@tanstack/react-query";
+import { createContact } from "../../utils/dataPoster";
+import toast from "react-hot-toast";
 
 interface CreateContactProps {
   isOpen: boolean;
@@ -7,6 +10,17 @@ interface CreateContactProps {
 }
 
 function CreateContact({ isOpen, onClose }: CreateContactProps) {
+  const { mutate, isPending } = useMutation({
+    mutationFn: createContact,
+    onSuccess: (res) => {
+      toast.success(res.name + " Contact Created");
+      onClose();
+    },
+    onError: () => {
+      toast.error("Something went wrong!");
+      // console.log(err);
+    },
+  });
   const {
     register,
     handleSubmit,
@@ -14,8 +28,11 @@ function CreateContact({ isOpen, onClose }: CreateContactProps) {
   } = useForm<Contact>();
 
   const onSubmit = (data: Contact) => {
-    console.log(data);
-    onClose();
+    mutate({
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+    });
   };
 
   return (
@@ -34,6 +51,7 @@ function CreateContact({ isOpen, onClose }: CreateContactProps) {
               type="text"
               className="grow"
               placeholder="Name"
+              disabled={isPending}
               {...register("name", {
                 required: "Name is required!",
               })}
@@ -58,6 +76,7 @@ function CreateContact({ isOpen, onClose }: CreateContactProps) {
               type="text"
               className="grow"
               placeholder="Email"
+              disabled={isPending}
               {...register("email", {
                 required: "Email is required!",
                 pattern: {
@@ -67,9 +86,9 @@ function CreateContact({ isOpen, onClose }: CreateContactProps) {
               })}
             />
           </label>
-          {errors.mobile && (
+          {errors.phone && (
             <div className="text-red-500 mx-1 my-1">
-              {errors.mobile?.message?.toString()}
+              {errors.phone?.message?.toString()}
             </div>
           )}
           <label className="input input-bordered flex items-center gap-2 mb-4">
@@ -82,7 +101,8 @@ function CreateContact({ isOpen, onClose }: CreateContactProps) {
               type="text"
               className="grow"
               placeholder="Mobile Number"
-              {...register("mobile", {
+              disabled={isPending}
+              {...register("phone", {
                 required: "Mobile no. is required!",
                 pattern: {
                   value: /^(\+\d{1,3}[- ]?)?\d{10}$/,
@@ -92,10 +112,23 @@ function CreateContact({ isOpen, onClose }: CreateContactProps) {
             />
           </label>
           <div className="flex gap-4 justify-center">
-            <button className="btn btn-outline btn-error" onClick={onClose}>
+            <button
+              className="btn btn-outline btn-error"
+              onClick={onClose}
+              disabled={isPending}
+            >
               Cancel
             </button>
-            <button className="btn btn-outline btn-success">Create</button>
+            <button
+              className="btn btn-outline btn-success"
+              disabled={isPending}
+            >
+              {isPending ? (
+                <span className="loading loading-dots" />
+              ) : (
+                "Create Contact"
+              )}
+            </button>
           </div>
         </form>
       </div>

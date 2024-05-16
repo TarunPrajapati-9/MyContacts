@@ -22,6 +22,7 @@ const Contacts: React.FC<ContactProps> = ({ searchQuery }) => {
   useEffect(() => {
     if (isError) {
       toast.error(`Error in Fetching User Data, Login First! ${error.message}`);
+      // console.log(error.message);
       navigate("/login");
     }
   }, [isError, error, navigate]);

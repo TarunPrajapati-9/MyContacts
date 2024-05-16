@@ -5,6 +5,7 @@ import EditModel from "./Models/EditModel";
 import DeleteModel from "./Models/DeleteModel";
 
 export interface Contact {
+  _id: string;
   name: string;
   phone: string;
   email: string;
@@ -105,10 +106,15 @@ const ContactCard: React.FC<ContactCardProps> = ({ contact }) => {
           isOpen={true}
           onClose={closeModal}
           contact={selectedContact}
+          contactID={contact._id}
         />
       )}
       {openModalIndex !== null && openModalIndex === 1 && (
-        <DeleteModel isOpen={true} onClose={closeModal} />
+        <DeleteModel
+          isOpen={true}
+          onClose={closeModal}
+          contactID={contact._id}
+        />
       )}
     </div>
   );
