@@ -1,4 +1,7 @@
+import { useState } from "react";
+import { Tooltip } from "react-tooltip";
 import ContactCard from "./ContactCard";
+import CreateContact from "./Models/CreateContact";
 
 interface ContactProps {
   searchQuery: string;
@@ -53,13 +56,39 @@ const Contacts: React.FC<ContactProps> = ({ searchQuery }) => {
     },
   ];
 
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openModel = () => {
+    setIsOpen(true);
+  };
+
+  const closeModel = () => {
+    setIsOpen(false);
+  };
+
   const filteredContacts = contacts.filter((contact) =>
     contact.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
     <>
-      <div className="font-navItems text-4xl px-6 py-6">Your Contact List</div>
+      <div className="flex justify-between items-center">
+        <div className="font-navItems text-4xl px-6 py-6">
+          Your Contact List
+        </div>
+        <div role="button" className="btn btn-ghost btn-circle avatar mr-8">
+          <div className="rounded-lg">
+            <img
+              alt="add"
+              src="./assets/icons/add.svg"
+              data-tooltip-id="add"
+              data-tooltip-content="Add Contact"
+              onClick={openModel}
+            />
+            <Tooltip className="tooltip" id="add" />
+          </div>
+        </div>
+      </div>
       {/* Iterate over the contacts array and render a ContactCard for each contact */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 overflow-hidden select-none">
         {filteredContacts.length > 0 ? (
@@ -72,6 +101,8 @@ const Contacts: React.FC<ContactProps> = ({ searchQuery }) => {
           </div>
         )}
       </div>
+
+      {isOpen && <CreateContact isOpen={isOpen} onClose={closeModel} />}
     </>
   );
 };

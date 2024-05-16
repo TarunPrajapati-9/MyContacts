@@ -16,7 +16,7 @@ export async function registerUser(params: RegisterUser) {
       },
     }
   );
-  //   console.log(data);
+  // console.log(data);
   return data;
 }
 
@@ -34,6 +34,6 @@ export async function loginUser(params: LoginUser) {
       },
     }
   );
-  console.log(data);
+  // console.log(data);
   return data;
 }

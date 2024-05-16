@@ -27,7 +27,18 @@ const registerUser = asyncHandler(async (req, res) => {
 
   // console.log(`User created ${user}`);
   if (user) {
-    res.status(201).json({ _id: user.id, email: user.email });
+    const accesstoken = jwt.sign(
+      {
+        user: {
+          username: user.username,
+          email: user.email,
+          id: user.id,
+        },
+      },
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: "60m" }
+    );
+    res.status(201).json({ _id: user.id, email: user.email, accesstoken });
   } else {
     res.status(400);
     throw new Error("User Not Created");
@@ -55,7 +66,7 @@ const loginUser = asyncHandler(async (req, res) => {
         },
       },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "40m" }
+      { expiresIn: "60m" }
     );
     res.status(200).json({ accesstoken });
   } else {
