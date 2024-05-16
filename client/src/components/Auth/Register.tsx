@@ -27,9 +27,9 @@ function Register() {
         navigate("/");
       }
     },
-    onError: (error) => {
+    onError: () => {
       toast.error("Invalid Credentials!");
-      console.log(error);
+      // console.log(error);
     },
   });
 

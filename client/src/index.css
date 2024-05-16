@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.skeleton {
+  @apply bg-[#A3B5BD];
+}
+
 @font-face {
   font-family: "Merriweather";
   src: url("/assets/fonts/Merriweather-Bold.ttf") format("truetype");

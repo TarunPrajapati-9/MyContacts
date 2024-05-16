@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import navItems from "../constants/navItems";
 import { useState, useRef, useEffect } from "react";
+import ProfileModel from "./Models/ProfileModel";
 
 interface NavBarProps {
   searchQuery: string;
@@ -9,8 +10,9 @@ interface NavBarProps {
 
 const NavBar: React.FC<NavBarProps> = ({ searchQuery, setSearchQuery }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [profileModel, setProfileModel] = useState(false);
 
-  const sidebarRef = useRef<HTMLDivElement>(null); // Provide explicit type for sidebarRef
+  const sidebarRef = useRef<HTMLDivElement>(null);
 
   const toggleMenu = (
     e: React.MouseEvent | React.TouchEvent | React.KeyboardEvent
@@ -25,7 +27,7 @@ const NavBar: React.FC<NavBarProps> = ({ searchQuery, setSearchQuery }) => {
         sidebarRef.current &&
         !sidebarRef.current.contains(event.target as Node)
       ) {
-        setIsOpen(false); // Close the sidebar
+        setIsOpen(false);
       }
     };
 
@@ -46,6 +48,14 @@ const NavBar: React.FC<NavBarProps> = ({ searchQuery, setSearchQuery }) => {
     if (event.key === "Enter") {
       toggleMenu(event);
     }
+  };
+
+  const profileClick = () => {
+    setProfileModel(true);
+  };
+
+  const profileClose = () => {
+    setProfileModel(false);
   };
 
   return (
@@ -98,7 +108,11 @@ const NavBar: React.FC<NavBarProps> = ({ searchQuery, setSearchQuery }) => {
           </div>
           <div role="button" className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
-              <img alt="Profile" src="./assets/icons/profile.svg" />
+              <img
+                alt="Profile"
+                src="./assets/icons/profile.svg"
+                onClick={profileClick}
+              />
             </div>
           </div>
         </div>
@@ -111,6 +125,11 @@ const NavBar: React.FC<NavBarProps> = ({ searchQuery, setSearchQuery }) => {
           />
         </div>
       </div>
+
+      {profileModel && (
+        <ProfileModel isOpen={profileModel} onClose={profileClose} />
+      )}
+
       {isOpen && (
         <div
           className="h-screen w-72 absolute top-0 right-0 z-50 bg-base-100"
@@ -121,7 +140,11 @@ const NavBar: React.FC<NavBarProps> = ({ searchQuery, setSearchQuery }) => {
               role="button"
               className="btn btn-ghost btn-circle avatar w-1/3 h-1/3"
             >
-              <img alt="Profile" src="./assets/icons/profile.svg" />
+              <img
+                alt="Profile"
+                src="./assets/icons/profile.svg"
+                onClick={profileClick}
+              />
             </div>
 
             <ul className="menu menu-horizontal px-1 p-8">

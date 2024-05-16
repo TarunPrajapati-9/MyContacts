@@ -29,7 +29,6 @@ export default function App() {
 }
 
 interface AppContentProps {
-  // Define interface for props
   searchQuery: string;
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
 }

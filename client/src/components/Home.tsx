@@ -1,11 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import features from "../constants/features";
+import { useAuth } from "../hooks/useAuth";
 
 const Home = () => {
   const navigate = useNavigate();
+  const { auth } = useAuth();
 
   const toSignUp = () => {
     navigate("/register");
+  };
+
+  const toContacts = () => {
+    navigate("/contacts");
   };
 
   return (
@@ -44,17 +50,31 @@ const Home = () => {
           management. Start organizing your contacts today with MyContacts!
         </p>
       </div>
-      <div className="flex items-center justify-center mt-4">
-        <p className="font-contentTitle md:text-2xl text-xl text-center md:text-left">
-          Sign up now to get started!
-        </p>
-        <button
-          className="btn btn-outline btn-info mx-4 w-36 animate-bounce"
-          onClick={toSignUp}
-        >
-          Sign Up
-        </button>
-      </div>
+      {auth ? (
+        <div className="flex items-center justify-center mt-4">
+          <p className="font-contentTitle md:text-2xl text-xl text-center md:text-left">
+            You're already Login
+          </p>
+          <button
+            className="btn btn-outline btn-info mx-4 w-36 animate-bounce"
+            onClick={toContacts}
+          >
+            See Contacts
+          </button>
+        </div>
+      ) : (
+        <div className="flex items-center justify-center mt-4">
+          <p className="font-contentTitle md:text-2xl text-xl text-center md:text-left">
+            Sign up now to get started!
+          </p>
+          <button
+            className="btn btn-outline btn-info mx-4 w-36 animate-bounce"
+            onClick={toSignUp}
+          >
+            Sign Up
+          </button>
+        </div>
+      )}
 
       {/* Bottom Section */}
       <div className="flex flex-col md:flex-row justify-center items-center px-4 py-1 select-none">

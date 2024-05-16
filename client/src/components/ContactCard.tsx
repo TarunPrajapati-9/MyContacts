@@ -6,7 +6,7 @@ import DeleteModel from "./Models/DeleteModel";
 
 export interface Contact {
   name: string;
-  mobile: string;
+  phone: string;
   email: string;
 }
 
@@ -62,11 +62,11 @@ const ContactCard: React.FC<ContactCardProps> = ({ contact }) => {
       <div className="w-[70%]">
         <div>{contact.name}</div>
         <div className="flex gap-2">
-          {contact.mobile}
+          {contact.phone}
           <img
             src="./assets/icons/copy.svg"
             alt="copy"
-            onClick={() => copyToClipboard(contact.mobile)}
+            onClick={() => copyToClipboard(contact.phone)}
             className="hover:opacity-70 cursor-pointer"
             data-tooltip-id="copy"
             data-tooltip-content={tooltipText}
@@ -88,7 +88,7 @@ const ContactCard: React.FC<ContactCardProps> = ({ contact }) => {
                 onClick={() => {
                   if (item.altText === "share") {
                     shareContact(
-                      `Name: ${contact.name}, Mobile: ${contact.mobile}, Email: ${contact.email}`
+                      `Name: ${contact.name}, Mobile: ${contact.phone}, Email: ${contact.email}`
                     );
                   } else {
                     openModal(index);
