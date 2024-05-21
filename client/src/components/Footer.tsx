@@ -53,7 +53,7 @@ const Footer = () => {
 
         {/* Email Section */}
         <div className="w-full md:w-1/3 p-16 flex flex-col items-center justify-center">
-          <a href="mailto:mycontacts@gmail.com">
+          <a href="mailto:mycontactsapp.team@gmail.com">
             <img
               src="./assets/icons/email.svg"
               alt="Email Logo"
@@ -61,7 +61,7 @@ const Footer = () => {
             />
           </a>
           <p className="font-footer text-center text-2xl">
-            mycontacts@gmail.com
+            mycontactsapp.team@gmail.com
           </p>
         </div>
       </div>

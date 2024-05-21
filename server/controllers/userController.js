@@ -2,6 +2,8 @@ const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { sendEmail } = require("./sendMail");
+
 //Register a User
 const registerUser = asyncHandler(async (req, res) => {
   const { username, email, password } = req.body;
@@ -24,7 +26,6 @@ const registerUser = asyncHandler(async (req, res) => {
     email,
     password: hashedPassword,
   });
-
   // console.log(`User created ${user}`);
   if (user) {
     const accesstoken = jwt.sign(
@@ -38,7 +39,16 @@ const registerUser = asyncHandler(async (req, res) => {
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: "60m" }
     );
-    res.status(201).json({ _id: user.id, email: user.email, accesstoken });
+
+    //mail
+    const messageId = await sendEmail(email, username, "register");
+    if (!messageId) {
+      throw new Error("Email Not Sent!");
+    }
+
+    res
+      .status(201)
+      .json({ _id: user.id, email: user.email, accesstoken, messageId });
   } else {
     res.status(400);
     throw new Error("User Not Created");
@@ -68,7 +78,14 @@ const loginUser = asyncHandler(async (req, res) => {
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: "60m" }
     );
-    res.status(200).json({ accesstoken });
+
+    //mail
+    const messageId = await sendEmail(email, user.username, "login");
+    if (!messageId) {
+      throw new Error("Email Not Sent!");
+    }
+
+    res.status(200).json({ accesstoken, messageId });
   } else {
     res.status(401);
     throw new Error("Email or password is not valid");
