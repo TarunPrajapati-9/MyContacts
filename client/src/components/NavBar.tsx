@@ -132,7 +132,7 @@ const NavBar: React.FC<NavBarProps> = ({ searchQuery, setSearchQuery }) => {
 
       {isOpen && (
         <div
-          className="h-screen w-72 absolute top-0 right-0 z-50 bg-base-100"
+          className="h-50 w-72 absolute top-0 right-0 z-50 bg-base-100"
           ref={sidebarRef}
         >
           <div className="flex flex-col justify-center p-4 mb-4 items-center">

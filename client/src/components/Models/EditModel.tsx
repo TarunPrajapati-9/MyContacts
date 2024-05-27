@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Tooltip } from "react-tooltip";
 import { Contact } from "../ContactCard";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { updateContact } from "../../utils/dataPutter";
 
@@ -14,12 +14,14 @@ interface EditModelProps {
 }
 
 function EditModel({ isOpen, onClose, contact, contactID }: EditModelProps) {
+  const queryClient = useQueryClient();
   const { register, handleSubmit, setValue } = useForm<Contact>();
   const { mutate, isPending } = useMutation({
     mutationFn: (data: { id: string; contact: Contact }) =>
       updateContact(data.id, data.contact),
     onSuccess: (res) => {
       toast.success(res.name + " Updated Successfully");
+      queryClient.invalidateQueries({ queryKey: ["Contacts"] });
       onClose();
     },
     onError: () => {

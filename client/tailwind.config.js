@@ -11,6 +11,7 @@ export default {
         content: ["Merienda"],
         footer: ["Niramit"],
         modelTitle: ["SeoulHangangCBLRegular"],
+        aboutDesc: ["MergeOne-Regular"],
       },
     },
   },

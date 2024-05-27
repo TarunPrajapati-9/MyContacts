@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteContact } from "../../utils/dataDelete";
 import toast from "react-hot-toast";
 interface DeleteModelProps {
@@ -8,10 +8,12 @@ interface DeleteModelProps {
 }
 
 function DeleteModel({ isOpen, onClose, contactID }: DeleteModelProps) {
+  const queryClient = useQueryClient();
   const { mutate, isPending } = useMutation({
     mutationFn: deleteContact,
     onSuccess: (res) => {
       toast.success(res.message);
+      queryClient.invalidateQueries({ queryKey: ["Contacts"] });
       onClose();
     },
     onError: () => {

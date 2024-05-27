@@ -35,3 +35,8 @@
   font-family: "SeoulHangangCBLRegular";
   src: url("/assets/fonts/SeoulHangangCBLRegular.ttf");
 }
+
+@font-face {
+  font-family: "MergeOne-Regular";
+  src: url("/assets/fonts/MergeOne-Regular.ttf");
+}

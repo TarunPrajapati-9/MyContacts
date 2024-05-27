@@ -13,6 +13,7 @@ import Footer from "./components/Footer";
 import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
 import { useState } from "react";
+import About from "./components/About";
 
 export default function App() {
   const [queryClient] = useState(() => new QueryClient());
@@ -46,6 +47,7 @@ function AppContent({ searchQuery, setSearchQuery }: AppContentProps) {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/about" element={<About />} />
         <Route
           path="/contacts"
           element={<Contacts searchQuery={searchQuery} />}

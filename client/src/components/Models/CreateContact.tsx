@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createContact } from "../../utils/dataPoster";
 import toast from "react-hot-toast";
 
@@ -15,10 +15,12 @@ export interface CreateContact {
 }
 
 function CreateContact({ isOpen, onClose }: CreateContactProps) {
+  const queryClient = useQueryClient();
   const { mutate, isPending } = useMutation({
     mutationFn: createContact,
     onSuccess: (res) => {
       toast.success(res.name + " Contact Created");
+      queryClient.invalidateQueries({ queryKey: ["Contacts"] });
       onClose();
     },
     onError: () => {

@@ -42,7 +42,7 @@ const Footer = () => {
                   key={item}
                   className="my-1.5 hover:opacity-80 cursor-pointer"
                 >
-                  <Link to="/" key={item}>
+                  <Link to={item.toLowerCase()} key={item}>
                     {item}
                   </Link>
                 </li>
