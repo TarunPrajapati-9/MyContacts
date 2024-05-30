@@ -9,8 +9,8 @@ const getContacts = asyncHandler(async (req, res) => {
 //create a new Contacts
 const createContacts = asyncHandler(async (req, res) => {
   //   console.log("Details: ", req.body);
-  const { name, email, phone } = req.body;
-  if (!name || !email || !phone) {
+  const { name, email, phone, imageUrl } = req.body;
+  if (!name || !email || !phone || !imageUrl) {
     res.status(400);
     throw new Error("All Fields are mandatory !");
   }
@@ -19,6 +19,7 @@ const createContacts = asyncHandler(async (req, res) => {
     name,
     email,
     phone,
+    imageUrl,
     user_id: req.user.id,
   });
   res.status(201).json(contact);

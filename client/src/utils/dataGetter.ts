@@ -34,6 +34,6 @@ export async function getContacts() {
       },
     }
   );
-  //   console.log(data);
+  // console.log(data);
   return data;
 }

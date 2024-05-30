@@ -1,17 +1,27 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteContact } from "../../utils/dataDelete";
+import { deleteContact, handleDelete } from "../../utils/dataDelete";
 import toast from "react-hot-toast";
+import { useState } from "react";
+
 interface DeleteModelProps {
   isOpen: boolean;
   onClose: () => void;
   contactID: string;
+  imageUrl: string;
 }
 
-function DeleteModel({ isOpen, onClose, contactID }: DeleteModelProps) {
+function DeleteModel({
+  isOpen,
+  onClose,
+  contactID,
+  imageUrl,
+}: DeleteModelProps) {
   const queryClient = useQueryClient();
+  const [Load, setLoad] = useState(false);
   const { mutate, isPending } = useMutation({
     mutationFn: deleteContact,
     onSuccess: (res) => {
+      setLoad(false);
       toast.success(res.message);
       queryClient.invalidateQueries({ queryKey: ["Contacts"] });
       onClose();
@@ -22,8 +32,11 @@ function DeleteModel({ isOpen, onClose, contactID }: DeleteModelProps) {
       // console.log(err);
     },
   });
-  const onDelete = () => {
-    console.log(contactID);
+
+  const onDelete = async () => {
+    // console.log(contactID);
+    setLoad(true);
+    await handleDelete(imageUrl);
     mutate(contactID);
   };
   return (
@@ -37,16 +50,20 @@ function DeleteModel({ isOpen, onClose, contactID }: DeleteModelProps) {
           <button
             className="btn btn-outline btn-error"
             onClick={onClose}
-            disabled={isPending}
+            disabled={isPending || Load}
           >
             No
           </button>
           <button
             className="btn btn-outline btn-success"
             onClick={onDelete}
-            disabled={isPending}
+            disabled={isPending || Load}
           >
-            Yes
+            {isPending || Load ? (
+              <span className="loading loading-dots" />
+            ) : (
+              "Yes"
+            )}
           </button>
         </div>
       </div>

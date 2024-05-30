@@ -9,6 +9,7 @@ export interface Contact {
   name: string;
   phone: string;
   email: string;
+  imageUrl: string;
 }
 
 interface ContactCardProps {
@@ -55,11 +56,12 @@ const ContactCard: React.FC<ContactCardProps> = ({ contact }) => {
     <div className="w-[425px] h-[125px] p-6 flex justify-center items-center">
       <div className="w-[30%] p-5 mb-6">
         <img
-          src="./assets/icons/profile.svg"
+          src={contact.imageUrl}
           alt="img"
-          className="w-86 h-86 rounded hover:transform hover:scale-110 transition-transform duration-300 ease-in-out"
+          className="rounded-full w-20 h-20 object-cover hover:transform hover:scale-110 transition-transform duration-300 ease-in-out select-none pointer-events-none"
         />
       </div>
+
       <div className="w-[70%]">
         <div>{contact.name}</div>
         <div className="flex gap-2">
@@ -107,6 +109,7 @@ const ContactCard: React.FC<ContactCardProps> = ({ contact }) => {
           onClose={closeModal}
           contact={selectedContact}
           contactID={contact._id}
+          imageUrl={contact.imageUrl}
         />
       )}
       {openModalIndex !== null && openModalIndex === 1 && (
@@ -114,6 +117,7 @@ const ContactCard: React.FC<ContactCardProps> = ({ contact }) => {
           isOpen={true}
           onClose={closeModal}
           contactID={contact._id}
+          imageUrl={contact.imageUrl}
         />
       )}
     </div>

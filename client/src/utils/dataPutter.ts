@@ -1,7 +1,12 @@
 import axios from "axios";
-import { Contact } from "../components/ContactCard";
+export interface EditContact {
+  name: string;
+  phone: string;
+  email: string;
+  imageUrl: string;
+}
 
-export async function updateContact(id: string, params: Contact) {
+export async function updateContact(id: string, params: EditContact) {
   console.log(id);
   const token = localStorage.getItem("access_token");
   if (!token) {
@@ -18,6 +23,6 @@ export async function updateContact(id: string, params: Contact) {
       },
     }
   );
-  console.log(data);
+  // console.log(data);
   return data;
 }

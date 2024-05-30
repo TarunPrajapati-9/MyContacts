@@ -1,4 +1,6 @@
 import axios from "axios";
+import supabase from "./supabase";
+import toast from "react-hot-toast";
 
 export async function deleteContact(id: string) {
   console.log(id);
@@ -16,6 +18,21 @@ export async function deleteContact(id: string) {
       },
     }
   );
-  console.log(data);
+  // console.log(data);
   return data;
+}
+
+export async function handleDelete(url: string) {
+  const prevFileName = url.split("/")[url.split("/").length - 1];
+  // console.log("Image URL : " + imageUrl);
+  // console.log("FILE: " + prevFileName);
+  await supabase.storage
+    .from("contact-images")
+    .remove([prevFileName])
+    .then(() => {
+      toast.success("Image Deleted Successfully");
+    })
+    .catch((error) => {
+      toast.error("Image Deletion Failed!" + error);
+    });
 }

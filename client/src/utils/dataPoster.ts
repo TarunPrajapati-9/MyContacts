@@ -1,5 +1,7 @@
 import axios from "axios";
 import { CreateContact } from "../components/Models/CreateContact";
+import supabase from "./supabase";
+import toast from "react-hot-toast";
 
 interface RegisterUser {
   email: string;
@@ -57,4 +59,24 @@ export async function createContact(params: CreateContact) {
   );
   // console.log(data);
   return data;
+}
+
+export async function handleImageUpload(file: File) {
+  const fileName = file.name
+    .replace(/\s+/g, "-")
+    .toLowerCase()
+    .concat(`-${Date.now()}`);
+
+  await supabase.storage
+    .from("contact-images")
+    .upload(fileName, file)
+    .then(() => {
+      toast.success("Image uploaded successfully");
+    })
+    .catch((error) => {
+      toast.error("Image upload failed" + error);
+    });
+
+  return supabase.storage.from("contact-images").getPublicUrl(fileName).data
+    .publicUrl;
 }

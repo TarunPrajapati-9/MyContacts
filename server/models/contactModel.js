@@ -1,26 +1,32 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const contactSchema = mongoose.Schema({
+const contactSchema = mongoose.Schema(
+  {
     user_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: "User",
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
     },
     name: {
-        type: String,
-        required: [true, "Please add the Contact Name"],
+      type: String,
+      required: [true, "Please add the Contact Name"],
     },
     email: {
-        type: String,
-        required: [true, "Please add the Contact Email"],
+      type: String,
+      required: [true, "Please add the Contact Email"],
     },
     phone: {
-        type: String,
-        required: [true, "Please add the Contact Phone Number"],
-    }
-},
-    {
-        timestamps: true,
-    });
+      type: String,
+      required: [true, "Please add the Contact Phone Number"],
+    },
+    imageUrl: {
+      type: String,
+      required: [true, "Please add Contact Image"],
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
-module.exports = mongoose.model('Contact', contactSchema);
+module.exports = mongoose.model("Contact", contactSchema);

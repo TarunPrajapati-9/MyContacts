@@ -2,6 +2,8 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createContact } from "../../utils/dataPoster";
 import toast from "react-hot-toast";
+import { handleImageUpload } from "../../utils/dataPoster";
+import { useState } from "react";
 
 interface CreateContactProps {
   isOpen: boolean;
@@ -12,13 +14,23 @@ export interface CreateContact {
   name: string;
   phone: string;
   email: string;
+  imageUrl: string;
+}
+
+export interface ContactPayload {
+  name: string;
+  phone: string;
+  email: string;
+  imageUrl: FileList;
 }
 
 function CreateContact({ isOpen, onClose }: CreateContactProps) {
   const queryClient = useQueryClient();
+  const [Load, setLoad] = useState(false);
   const { mutate, isPending } = useMutation({
     mutationFn: createContact,
     onSuccess: (res) => {
+      setLoad(false);
       toast.success(res.name + " Contact Created");
       queryClient.invalidateQueries({ queryKey: ["Contacts"] });
       onClose();
@@ -32,13 +44,16 @@ function CreateContact({ isOpen, onClose }: CreateContactProps) {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<CreateContact>();
+  } = useForm<ContactPayload>();
 
-  const onSubmit = (data: CreateContact) => {
+  const onSubmit = async (formData: ContactPayload) => {
+    setLoad(true);
+    const url = await handleImageUpload(formData.imageUrl[0]);
     mutate({
-      name: data.name,
-      email: data.email,
-      phone: data.phone,
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      imageUrl: url,
     });
   };
 
@@ -58,7 +73,7 @@ function CreateContact({ isOpen, onClose }: CreateContactProps) {
               type="text"
               className="grow"
               placeholder="Name"
-              disabled={isPending}
+              disabled={isPending || Load}
               {...register("name", {
                 required: "Name is required!",
               })}
@@ -70,20 +85,12 @@ function CreateContact({ isOpen, onClose }: CreateContactProps) {
             </div>
           )}
           <label className="input input-bordered flex items-center gap-2 mb-4">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 16 16"
-              fill="currentColor"
-              className="w-4 h-4 opacity-70"
-            >
-              <path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
-              <path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
-            </svg>
+            <img src="/assets/icons/mail.svg" alt="email" className="w-4 h-4" />
             <input
               type="text"
               className="grow"
               placeholder="Email"
-              disabled={isPending}
+              disabled={isPending || Load}
               {...register("email", {
                 required: "Email is required!",
                 pattern: {
@@ -108,7 +115,7 @@ function CreateContact({ isOpen, onClose }: CreateContactProps) {
               type="text"
               className="grow"
               placeholder="Mobile Number"
-              disabled={isPending}
+              disabled={isPending || Load}
               {...register("phone", {
                 required: "Mobile no. is required!",
                 pattern: {
@@ -118,19 +125,40 @@ function CreateContact({ isOpen, onClose }: CreateContactProps) {
               })}
             />
           </label>
+          {errors.imageUrl && (
+            <div className="text-red-500 mx-1 my-1">
+              {errors.imageUrl?.message?.toString()}
+            </div>
+          )}
+          <label className="input input-bordered flex items-center gap-2 mb-4">
+            <img
+              src="/assets/icons/profile.svg"
+              alt="image"
+              className="w-5 h-5"
+            />
+            <input
+              type="file"
+              className="file-input w-full"
+              accept="image/*"
+              disabled={isPending || Load}
+              {...register("imageUrl", {
+                required: "Contact Image is required!",
+              })}
+            />
+          </label>
           <div className="flex gap-4 justify-center">
             <button
               className="btn btn-outline btn-error"
               onClick={onClose}
-              disabled={isPending}
+              disabled={isPending || Load}
             >
               Cancel
             </button>
             <button
               className="btn btn-outline btn-success"
-              disabled={isPending}
+              disabled={isPending || Load}
             >
-              {isPending ? (
+              {isPending || Load ? (
                 <span className="loading loading-dots" />
               ) : (
                 "Create Contact"
