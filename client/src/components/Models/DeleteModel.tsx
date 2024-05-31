@@ -36,7 +36,7 @@ function DeleteModel({
   const onDelete = async () => {
     // console.log(contactID);
     setLoad(!Load);
-    await handleDelete(imageUrl);
+    await handleDelete(imageUrl, "contact");
     mutate(contactID);
   };
   return (
