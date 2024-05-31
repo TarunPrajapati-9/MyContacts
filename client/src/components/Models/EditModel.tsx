@@ -17,6 +17,12 @@ interface EditModelProps {
   contactID: string;
   imageUrl: string;
 }
+export interface EditContactPayload {
+  name: string;
+  phone: string;
+  email: string;
+  imageUrl: FileList | string;
+}
 
 function EditModel({
   isOpen,
@@ -27,12 +33,16 @@ function EditModel({
 }: EditModelProps) {
   const queryClient = useQueryClient();
   const [Load, setLoad] = useState(false);
+  const [initialValues, setInitialValues] = useState<EditContactPayload | null>(
+    null
+  );
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors },
   } = useForm<ContactPayload>();
+
   const { mutate, isPending } = useMutation({
     mutationFn: (data: { id: string; contact: EditContact }) =>
       updateContact(data.id, data.contact),
@@ -43,10 +53,9 @@ function EditModel({
       onClose();
     },
     onError: () => {
-      setLoad(!Load);
+      setLoad(false);
       toast.error("Something went wrong!");
       onClose();
-      // console.log(err);
     },
   });
 
@@ -55,16 +64,35 @@ function EditModel({
       setValue("name", contact.name);
       setValue("email", contact.email);
       setValue("phone", contact.phone);
+      setInitialValues({
+        name: contact.name,
+        email: contact.email,
+        phone: contact.phone,
+        imageUrl: imageUrl,
+      });
     }
-  }, [contact, setValue]);
+  }, [contact, setValue, imageUrl]);
 
   const onSubmit = async (data: ContactPayload) => {
-    setLoad(!Load);
+    setLoad(true);
+
+    if (
+      data.name === initialValues?.name &&
+      data.email === initialValues?.email &&
+      data.phone === initialValues?.phone &&
+      !data.imageUrl[0]
+    ) {
+      toast.error("No changes made.");
+      setLoad(false);
+      return;
+    }
+
     let newUrl = imageUrl;
     if (data.imageUrl[0]) {
       await handleDelete(imageUrl, "contact");
       newUrl = await handleImageUpload(data.imageUrl[0], "contact");
     }
+
     mutate({
       id: contactID,
       contact: {
