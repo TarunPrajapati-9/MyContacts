@@ -60,14 +60,14 @@ const Footer = () => {
               className="px-1 w-[50px] h-[50px] cursor-pointer hover:opacity-85"
             />
           </a>
-          <p className="font-footer text-center text-2xl">
+          <p className="font-footer text-center text-2xl select-all">
             mycontactsapp.team@gmail.com
           </p>
         </div>
       </div>
 
       {/* CopyRight Section */}
-      <div className="font-title text-center p-8">
+      <div className="font-title text-center p-8 select-none">
         &copy; {date.getFullYear()} - All Rights Reserved | MyContacts
       </div>
     </>

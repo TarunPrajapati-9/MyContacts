@@ -24,12 +24,12 @@ const Home = () => {
             Welcome to MyContacts!
           </div>
           <div className="font-content my-5 md:text-2xl text-xl px-4 md:text-left text-justify">
-            <p className="mt-8">
+            <p className="mt-8 text-justify">
               Your Personal Contact Manager Stay organized and connected with
               MyContacts, your ultimate solution for managing your personal
               contacts.
             </p>
-            <p className="mt-12">
+            <p className="mt-12 text-justify">
               Whether you're looking to keep track of friends, family, or
               business contacts, MyContacts makes it easy to maintain your
               contact diary in one convenient location.
@@ -44,7 +44,7 @@ const Home = () => {
 
       {/* Middle Section */}
       <div className="flex justify-center items-center px-4 md:px-7 py-2 mt-4 select-none">
-        <p className="font-content md:text-2xl text-xl text-justify md:text-left">
+        <p className="font-content md:text-2xl text-xl text-justify">
           With MyContacts, managing your contacts has never been simpler. Say
           goodbye to scattered address books and hello to streamlined contact
           management. Start organizing your contacts today with MyContacts!
@@ -88,7 +88,7 @@ const Home = () => {
             Key Features
           </div>
           <div className="font-content my-5 md:text-2xl text-xl px-4 text-justify">
-            <ul className="list-disc ml-8">
+            <ul className="list-disc ml-8 text-justify">
               {features.map((feature, index) => (
                 <li key={index}>{feature}</li>
               ))}
