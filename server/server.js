@@ -10,7 +10,7 @@ const app = express();
 
 const port = process.env.PORT || 3000;
 app.get("/", (req, res) => {
-  res.send("Hello Contact");
+  res.send("Hello, from Contact Server");
 });
 
 app.use(cors());

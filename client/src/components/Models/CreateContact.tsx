@@ -30,7 +30,7 @@ function CreateContact({ isOpen, onClose }: CreateContactProps) {
   const { mutate, isPending } = useMutation({
     mutationFn: createContact,
     onSuccess: (res) => {
-      setLoad(false);
+      setLoad(!Load);
       toast.success(res.name + " Contact Created");
       queryClient.invalidateQueries({ queryKey: ["Contacts"] });
       onClose();
@@ -47,8 +47,8 @@ function CreateContact({ isOpen, onClose }: CreateContactProps) {
   } = useForm<ContactPayload>();
 
   const onSubmit = async (formData: ContactPayload) => {
-    setLoad(true);
-    const url = await handleImageUpload(formData.imageUrl[0]);
+    setLoad(!Load);
+    const url = await handleImageUpload(formData.imageUrl[0], "contact");
     mutate({
       name: formData.name,
       email: formData.email,

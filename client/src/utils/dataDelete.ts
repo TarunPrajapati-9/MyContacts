@@ -22,12 +22,15 @@ export async function deleteContact(id: string) {
   return data;
 }
 
-export async function handleDelete(url: string) {
-  const prevFileName = url.split("/")[url.split("/").length - 1];
+export async function handleDelete(url: string, type: "profile" | "contact") {
+  const prevFileName = url?.split("/")[url?.split("/").length - 1];
   // console.log("Image URL : " + imageUrl);
   // console.log("FILE: " + prevFileName);
+
+  const bucketName = type === "profile" ? "profile-images" : "contact-images";
+
   await supabase.storage
-    .from("contact-images")
+    .from(bucketName)
     .remove([prevFileName])
     .then(() => {
       toast.success("Image Deleted Successfully");

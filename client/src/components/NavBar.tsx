@@ -58,6 +58,13 @@ const NavBar: React.FC<NavBarProps> = ({ searchQuery, setSearchQuery }) => {
     setProfileModel(false);
   };
 
+  let imagePath: string;
+  if (localStorage.getItem("photo")) {
+    imagePath = localStorage.getItem("photo") as string; // Type assertion for clarity
+  } else {
+    imagePath = "./assets/icons/profile.svg";
+  }
+
   return (
     <>
       <div className="navbar flex items-center justify-between mb-3">
@@ -106,13 +113,13 @@ const NavBar: React.FC<NavBarProps> = ({ searchQuery, setSearchQuery }) => {
               className="absolute top-1/2 right-2 transform -translate-y-1/2 w-9 h-9 text-gray-400"
             />
           </div>
-          <div role="button" className="btn btn-ghost btn-circle avatar">
-            <div className="w-10 rounded-full">
-              <img
-                alt="Profile"
-                src="./assets/icons/profile.svg"
-                onClick={profileClick}
-              />
+          <div
+            role="button"
+            className="btn btn-ghost btn-circle avatar"
+            onClick={profileClick}
+          >
+            <div className="w-10 rounded-full pointer-events-none">
+              <img alt="Profile" src={imagePath} />
             </div>
           </div>
         </div>
@@ -140,11 +147,7 @@ const NavBar: React.FC<NavBarProps> = ({ searchQuery, setSearchQuery }) => {
               role="button"
               className="btn btn-ghost btn-circle avatar w-1/3 h-1/3"
             >
-              <img
-                alt="Profile"
-                src="./assets/icons/profile.svg"
-                onClick={profileClick}
-              />
+              <img alt="Profile" src={imagePath} onClick={profileClick} />
             </div>
 
             <ul className="menu menu-horizontal px-1 p-8">

@@ -61,14 +61,19 @@ export async function createContact(params: CreateContact) {
   return data;
 }
 
-export async function handleImageUpload(file: File) {
+export async function handleImageUpload(
+  file: File,
+  type: "profile" | "contact"
+) {
   const fileName = file.name
     .replace(/\s+/g, "-")
     .toLowerCase()
     .concat(`-${Date.now()}`);
 
+  const bucketName = type === "profile" ? "profile-images" : "contact-images";
+
   await supabase.storage
-    .from("contact-images")
+    .from(bucketName)
     .upload(fileName, file)
     .then(() => {
       toast.success("Image uploaded successfully");
@@ -77,6 +82,6 @@ export async function handleImageUpload(file: File) {
       toast.error("Image upload failed" + error);
     });
 
-  return supabase.storage.from("contact-images").getPublicUrl(fileName).data
+  return supabase.storage.from(bucketName).getPublicUrl(fileName).data
     .publicUrl;
 }

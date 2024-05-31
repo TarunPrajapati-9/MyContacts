@@ -43,7 +43,7 @@ function EditModel({
       onClose();
     },
     onError: () => {
-      setLoad(false);
+      setLoad(!Load);
       toast.error("Something went wrong!");
       onClose();
       // console.log(err);
@@ -59,11 +59,11 @@ function EditModel({
   }, [contact, setValue]);
 
   const onSubmit = async (data: ContactPayload) => {
-    setLoad(true);
+    setLoad(!Load);
     let newUrl = imageUrl;
     if (data.imageUrl[0]) {
-      await handleDelete(imageUrl);
-      newUrl = await handleImageUpload(data.imageUrl[0]);
+      await handleDelete(imageUrl, "contact");
+      newUrl = await handleImageUpload(data.imageUrl[0], "contact");
     }
     mutate({
       id: contactID,
@@ -156,6 +156,7 @@ function EditModel({
                 type="file"
                 className="border border-gray-300 rounded-md file-input"
                 disabled={isPending}
+                accept="image/*"
                 {...register("imageUrl")}
               />
             </div>

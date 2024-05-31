@@ -21,7 +21,7 @@ function DeleteModel({
   const { mutate, isPending } = useMutation({
     mutationFn: deleteContact,
     onSuccess: (res) => {
-      setLoad(false);
+      setLoad(!Load);
       toast.success(res.message);
       queryClient.invalidateQueries({ queryKey: ["Contacts"] });
       onClose();
@@ -35,7 +35,7 @@ function DeleteModel({
 
   const onDelete = async () => {
     // console.log(contactID);
-    setLoad(true);
+    setLoad(!Load);
     await handleDelete(imageUrl);
     mutate(contactID);
   };

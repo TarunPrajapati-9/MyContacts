@@ -94,7 +94,43 @@ const loginUser = asyncHandler(async (req, res) => {
 
 //Get Information of current a User
 const currentUser = asyncHandler(async (req, res) => {
-  res.json(req.user);
+  const user = await User.findById(req.user.id);
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
+  res.json({
+    id: user._id,
+    username: user.username,
+    email: user.email,
+    imageUrl: user.imageUrl,
+  });
 });
 
-module.exports = { registerUser, loginUser, currentUser };
+//update user
+const updateUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
+  // console.log(user._id + " && " + req.user.id);
+  if (user._id.toString() !== req.user.id) {
+    res.status(403);
+    throw new Error("User don't have permission");
+  }
+
+  if (!req.body.imageUrl) {
+    res.status(404);
+    throw new Error("Image not found");
+  }
+
+  user.imageUrl = req.body.imageUrl || user.imageUrl;
+
+  const updatedUser = await user.save();
+
+  res.status(200).json(updatedUser);
+});
+module.exports = { registerUser, loginUser, currentUser, updateUser };

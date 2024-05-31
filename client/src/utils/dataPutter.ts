@@ -7,7 +7,7 @@ export interface EditContact {
 }
 
 export async function updateContact(id: string, params: EditContact) {
-  console.log(id);
+  // console.log(id);
   const token = localStorage.getItem("access_token");
   if (!token) {
     throw new Error("No token found");
@@ -15,6 +15,28 @@ export async function updateContact(id: string, params: EditContact) {
 
   const { data } = await axios.put(
     `${import.meta.env.VITE_BACKEND_URL}/api/contacts/${id}`,
+    params,
+    {
+      headers: {
+        "x-api-key": import.meta.env.VITE_HEADER_SECRET,
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  // console.log(data);
+  return data;
+}
+
+export async function updateUser(id: string, params: { imageUrl: string }) {
+  // console.log(id);
+  // console.log(params.imageUrl);
+  const token = localStorage.getItem("access_token");
+  if (!token) {
+    throw new Error("No token found");
+  }
+
+  const { data } = await axios.put(
+    `${import.meta.env.VITE_BACKEND_URL}/api/users/update/${id}`,
     params,
     {
       headers: {
