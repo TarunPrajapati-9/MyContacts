@@ -57,7 +57,7 @@ export default function About() {
               delivering excellence in every endeavor. Let's collaborate and
               bring your ideas to life!
             </p>
-            <div className="flex gap-6 justify-center mb-4">
+            <div className="flex gap-6 justify-center mb-4 md:mr-20">
               <p className="font-aboutDesc font-semibold p-4 text-2xl">
                 Connect :
               </p>

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import navItems from "../constants/navItems";
 import { useState, useRef, useEffect } from "react";
 import ProfileModel from "./Models/ProfileModel";
@@ -65,6 +65,9 @@ const NavBar: React.FC<NavBarProps> = ({ searchQuery, setSearchQuery }) => {
     imagePath = "./assets/icons/profile.svg";
   }
 
+  const location = useLocation();
+  const isContactsPage = location.pathname === "/contacts";
+
   return (
     <>
       <div className="navbar flex items-center justify-between mb-3">
@@ -106,6 +109,7 @@ const NavBar: React.FC<NavBarProps> = ({ searchQuery, setSearchQuery }) => {
               className="input input-bordered pr-10 w-24 md:w-auto rounded-badge bg-transparent"
               value={searchQuery}
               onChange={handleSearchInputChange}
+              disabled={!isContactsPage}
             />
             <img
               src="./assets/icons/search.png"
@@ -168,6 +172,7 @@ const NavBar: React.FC<NavBarProps> = ({ searchQuery, setSearchQuery }) => {
                   placeholder="Search Contacts"
                   className="input input-bordered w-full rounded-badge bg-transparent"
                   value={searchQuery}
+                  disabled={!isContactsPage}
                   onChange={handleSearchInputChange}
                   onKeyDown={handleKeyPress}
                 />
